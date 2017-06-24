@@ -302,20 +302,148 @@
 			<artifactId>wsdl4j</artifactId>
 			<version>1.6.2</version>
 		</dependency>
-		<plugins> 
-         <plugin> 
-            <groupId>org.apache.maven.plugins</groupId> 
-            <artifactId>maven-compiler-plugin</artifactId>
-            <version>3.1</version> 
-            <configuration> 
-                <source>1.7</source> 
-                <target>1.7</target> 
-                <encoding>UTF8</encoding> 
-            </configuration> 
-         </plugin> 
-    </plugins>
 	</dependencies>
 	<build>
-		<finalName>spring</finalName>
+		<finalName>ydapi</finalName>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+					<configuration>
+						<source>${jdk.version}</source>
+						<target>${jdk.version}</target>
+						<encoding>${project.build.sourceEncoding}</encoding>
+						<showWarnings>true</showWarnings>
+					</configuration>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.1.1</version>
+					<configuration>
+						<outputDirectory>${project.build.directory}/../..</outputDirectory>
+						<warName>${finalName}</warName>
+						<archive>
+							<manifestEntries>
+								<Manifest-Version>${m.version}</Manifest-Version>
+							</manifestEntries>
+						</archive>
+					</configuration>
+				</plugin>
+				<!-- 跳过测试 -->
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<configuration>
+						<skip>true</skip>
+					</configuration>
+				</plugin>
+				<!-- resource插件 -->
+		        <plugin>
+		            <artifactId>maven-resources-plugin</artifactId>
+		            <version>2.5</version>
+		            <executions>
+		                <execution>
+		                    <id>copy-xmls</id>
+		                    <phase>process-sources</phase>
+		                    <goals>
+		                        <goal>copy-resources</goal>
+		                    </goals>
+		                    <configuration>
+		                        <outputDirectory>${basedir}/target/classes</outputDirectory>
+		                        <resources>
+		                            <resource>
+		                                <directory>${basedir}/src/main/java</directory>
+		                                <includes>
+		                                    <include>**/*.xml</include>
+		                                </includes>
+		                            </resource>
+		                        </resources>
+		                    </configuration>
+		                </execution>
+		            </executions>
+		        </plugin> 
+			</plugins>
+		</pluginManagement>
 	</build>
+	<profiles>
+		<profile>
+			<id>test</id>
+			<properties>
+				<env>test</env>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.8</version>
+	                    <executions>
+	                        <execution>
+	                            <phase>compile</phase>
+	                            <configuration>
+	                                <target>
+	                                    <copy file="${basedir}/target/classes/application_${env}.properties"
+	                                    	  tofile="${basedir}/target/classes/application.properties"
+	                                    	  overwrite="true"/>
+	                                </target>
+	                                <target>
+	                                    <copy file="${basedir}/target/classes/config_${env}.properties"
+	                                    	  tofile="${basedir}/target/classes/config.properties"
+	                                    	  overwrite="true"/>
+	                                </target>
+	                                <target>
+	                                    <copy file="${basedir}/target/classes/log4j_${env}.xml"
+	                                    	  tofile="${basedir}/target/classes/log4j.xml"
+	                                    	  overwrite="true"/>
+	                                </target>
+	                            </configuration>
+	                            <goals>
+	                                <goal>run</goal>
+	                            </goals>
+	                        </execution>
+                   		</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+		<profile>
+			<id>prd</id>
+			<properties>
+				<env>prd</env>
+			</properties>
+			<build>
+				<plugins>
+					<plugin>
+						<artifactId>maven-antrun-plugin</artifactId>
+						<version>1.8</version>
+	                    <executions>
+	                        <execution>
+	                            <phase>compile</phase>
+	                            <configuration>
+	                                <target>
+	                                    <copy file="${basedir}/target/classes/application_${env}.properties"
+	                                    	  tofile="${basedir}/target/classes/application.properties"
+	                                    	  overwrite="true"/>
+	                                </target>
+	                                <target>
+	                                    <copy file="${basedir}/target/classes/config_${env}.properties"
+	                                    	  tofile="${basedir}/target/classes/config.properties"
+	                                    	  overwrite="true"/>
+	                                </target>
+	                                <target>
+	                                    <copy file="${basedir}/target/classes/log4j_${env}.xml"
+	                                    	  tofile="${basedir}/target/classes/log4j.xml"
+	                                    	  overwrite="true"/>
+	                                </target>
+	                            </configuration>
+	                            <goals>
+	                                <goal>run</goal>
+	                            </goals>
+	                        </execution>
+                   		</executions>
+					</plugin>
+				</plugins>
+			</build>
 </project>
