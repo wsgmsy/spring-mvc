@@ -13,6 +13,7 @@
 		<junitversion>3.8.1</junitversion>
 		<jackson.version>2.5.0</jackson.version>
 	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -130,7 +131,12 @@
 			<artifactId>spring-aop</artifactId>
 			<version>${springversion}</version>
 		</dependency>
-
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
@@ -184,7 +190,7 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.36</version>
+			<version>5.1.24</version>
 		</dependency>
 		<dependency>
 			<groupId>aopalliance</groupId>
@@ -259,6 +265,13 @@
 			<artifactId>commons-codec</artifactId>
 			<version>1.7</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/commons-httpclient/commons-httpclient -->
+		<dependency>
+		    <groupId>commons-httpclient</groupId>
+		    <artifactId>commons-httpclient</artifactId>
+		    <version>3.1</version>
+		</dependency>
+				
 		<!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
 		<dependency>
 			<groupId>redis.clients</groupId>
@@ -302,6 +315,7 @@
 			<artifactId>wsdl4j</artifactId>
 			<version>1.6.2</version>
 		</dependency>
+
 	</dependencies>
 	<build>
 		<finalName>ydapi</finalName>
@@ -446,4 +460,6 @@
 					</plugin>
 				</plugins>
 			</build>
+		</profile>
+	</profiles>
 </project>
