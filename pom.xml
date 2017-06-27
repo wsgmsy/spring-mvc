@@ -12,6 +12,7 @@
 		<springversion>4.2.0.RELEASE</springversion>
 		<junitversion>3.8.1</junitversion>
 		<jackson.version>2.5.0</jackson.version>
+		<jdk.version>1.7</jackson.version>
 	</properties>
 	
 	<dependencies>
